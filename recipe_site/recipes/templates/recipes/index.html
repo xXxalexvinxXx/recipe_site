@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Рецепты</h2>
+<ul>
+    {% for recipe in recipes %}
+    <li>
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="100">
+        <a href="{% url 'recipes:recipe_detail' recipe.id %}">{{ recipe.title }}</a> — {{ recipe.category.name }}
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'recipes:add_recipe' %}">Добавить рецепт</a>
+{% endblock %}

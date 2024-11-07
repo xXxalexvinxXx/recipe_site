@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Ингредиенты</h2>
+<ul>
+    {% for ingredient in ingredients %}
+    <li>{{ ingredient.name }} — {{ ingredient.calories }} ккал, Б: {{ ingredient.proteins }} г, Ж: {{ ingredient.fats }} г, У: {{ ingredient.carbs }} г</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'ingredients:add_ingredient' %}">Добавить ингредиент</a>
+{% endblock %}

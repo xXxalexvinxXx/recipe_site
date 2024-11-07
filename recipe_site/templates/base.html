@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Мои рецепты{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'recipes:index' %}">Рецепты</a></h1>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li>Привет, {{ user.username }}</li>
+                    <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                {% else %}
+                    <li><a href="{% url 'users:login' %}">Вход</a></li>
+                    <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

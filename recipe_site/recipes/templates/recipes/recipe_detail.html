@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ recipe.title }}</h2>
+<p>Автор: {{ recipe.author.get_full_name|default:recipe.author.username }}</p>
+<p>Категория: {{ recipe.category.name }}</p>
+<p>Описание: {{ recipe.description }}</p>
+<p>Общее время: {{ recipe.total_time }} минут</p>
+<img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="300">
+<h3>Ингредиенты</h3>
+<ul>
+    {% for ingredient in recipe.recipe_ingredients.all %}
+    <li>{{ ingredient.ingredient.name }} - {{ ingredient.amount }} г</li>
+    {% endfor %}
+</ul>
+<h3>Шаги приготовления</h3>
+<ol>
+    {% for step in recipe.steps.all %}
+    <li>{{ step.description }} ({{ step.time }} минут)</li>
+    {% endfor %}
+</ol>
+{% if user == recipe.author %}
+<a href="{% url 'recipes:edit_recipe' recipe.id %}">Редактировать рецепт</a>
+{% endif %}
+{% endblock %}
