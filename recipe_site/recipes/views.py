@@ -1,10 +1,26 @@
-from django.shortcuts import render, get_object_or_404
+# recipes/views.py
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Recipe
+from .forms import RecipeForm
+from categories.models import Category
 
-def index(request):
-    recipes = Recipe.objects.order_by('?')[:5]  # 5 случайных рецептов
-    return render(request, 'recipes/index.html', {'recipes': recipes})
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('recipes:index')
+    else:
+        form = RecipeForm()
+    return render(request, 'recipes/recipe_form.html', {'form': form})
 
-def recipe_detail(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    return render(request, 'recipes/recipe_detail.html', {'recipe': recipe})
+def edit_recipe(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect('recipes:recipe_detail', pk=recipe.pk)
+    else:
+        form = RecipeForm(instance=recipe)
+    return render(request, 'recipes/recipe_form.html', {'form': form})

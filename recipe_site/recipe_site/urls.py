@@ -22,5 +22,6 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),  # Подключение URL-ов приложения users
     path('ingredients/', include('ingredients.urls', namespace='ingredients')),
     # Подключение URL-ов приложения ingredients
+    path('categories/', include('categories.urls', namespace='categories')),# Подключение URL-ов категорий
     path('', include('recipes.urls', namespace='recipes')),  # Подключение URL-ов приложения recipes
 ]
